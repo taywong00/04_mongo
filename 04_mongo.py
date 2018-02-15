@@ -1,7 +1,6 @@
 from pymongo import MongoClient
 
-# Charles Weng, Taylor Wong
-# SoftDev2 pd7
+# Charles Weng, Taylor Wong# SoftDev2 pd7
 # K #04: Mi only nyam ital food, mon!
 # 2018-02-15
 
@@ -47,12 +46,30 @@ def find_zg(z, g):
     return d
 
 
+# search by zipcode and score
+def find_zs(z, s):
+    d = r.find({'$and':[{"address.zipcode":str(z)}, {"grades.score": {'$lt': s}}]})
+    for doc in d:
+        print doc
+    return d
+
+# search by zipcode and cuisine type
+def find_a(z, c):
+    d = r.find({'$and':[{"address.zipcode":str(z)}, {"cuisine": cuisine}]})
+    for doc in d:
+        print doc
+    return d
+
+
 '''
 ================================================================================
-                                    tests
+                                      tests
 ================================================================================
 '''
 
 # find_b('Manhattan') # very big
 find_z('10282')
 find_zg('10282', 'A')
+find_zs('10282', '11')
+find_a('10282', 'Chinese'):
+                                                
