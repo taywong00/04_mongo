@@ -136,7 +136,7 @@ if(False):
 
 # pokedex tests
 if(True):
-    # find_t('Water')
-    # find_w('Fire')
-    # find_tw('Grass', 'Poison')
+    find_t('Water')
+    find_w('Fire')
+    find_tw('Grass', 'Poison')
     find_s(2)
