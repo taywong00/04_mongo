@@ -83,12 +83,13 @@ url = 'https://raw.githubusercontent.com/Biuni/PokemonGO-Pokedex/master/pokedex.
 if(p.count() == 0):
     resp = urllib2.urlopen(url)
     dex = json.loads(resp.read())
-    for poke in dex[0]:
+    # print dex
+    for poke in dex['pokemon']:
         p.insert_one(poke)
 
 # searches by type
 def find_t(t):
-    d = p.find({"pokemon.type": t})
+    d = p.find({"type": t})
     for doc in d:
         print doc
     return d
@@ -96,7 +97,7 @@ def find_t(t):
 
 # searches by weaknesses
 def find_w(w):
-    d = p.find({"pokemon.weaknesses": w})
+    d = p.find({"weaknesses": w})
     for doc in d:
         print doc
     return d
@@ -104,7 +105,7 @@ def find_w(w):
 
 # searches by type and weaknesses
 def find_tw(t, w):
-    d = p.find({"$and": [{"pokemon.type": t}, {"pokemon.weaknesses": w}]})
+    d = p.find({"$and": [{"type": t}, {"weaknesses": w}]})
     for doc in d:
         print doc
     return d
@@ -112,7 +113,7 @@ def find_tw(t, w):
 
 # searches by average spawns
 def find_s(s):
-    d = p.find({"pokemon.avg_spawns": {"$lt": s}})
+    d = p.find({"avg_spawns": {"$lt": s}})
     for doc in d:
         print doc
     return d
@@ -137,5 +138,5 @@ if(False):
 if(True):
     # find_t('Water')
     # find_w('Fire')
-    # find_tw('Grass', 'Fighting')
-    find_s(10)
+    # find_tw('Grass', 'Poison')
+    find_s(2)
