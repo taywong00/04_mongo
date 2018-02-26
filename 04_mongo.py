@@ -82,9 +82,9 @@ url = 'https://raw.githubusercontent.com/Biuni/PokemonGO-Pokedex/master/pokedex.
 # does data already exist
 if(p.count() == 0):
     resp = urllib2.urlopen(url)
-    jsn = json.loads(resp.read())
-    p.insert_one(jsn)
-
+    dex = json.loads(resp.read())
+    for poke in dex[0]:
+        p.insert_one(poke)
 
 # searches by type
 def find_t(t):
@@ -120,7 +120,7 @@ def find_s(s):
 
 '''
 ================================================================================
-tests
+                                    tests
 ================================================================================
 '''
 
