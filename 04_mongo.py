@@ -1,4 +1,8 @@
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
 from pymongo import MongoClient
+import urllib2
+import json
 
 # Charles Weng, Taylor Wong
 # SoftDev2 pd7
@@ -20,7 +24,7 @@ r = test['restaurants']
 '''
 ================================================================================
                                  functions
-    test.returant parsing functions
+                        test.returant parsing functions
 ================================================================================
 '''
 
@@ -65,41 +69,53 @@ def find_a(z, c):
     return d
 
 
-
-
-
 '''
 ================================================================================
                                 set up & functions 2
 ================================================================================
 '''
 
-db = c['+X米X+']
+db = c[u'+X米X+']
 p = db['pokedex']
+url = 'https://raw.githubusercontent.com/Biuni/PokemonGO-Pokedex/master/pokedex.json'
 
 # does data already exist
-if (p.length == 0):
-    pass
+if(p.count() == 0):
+    resp = urllib2.urlopen(url)
+    jsn = json.loads(resp.read())
+    p.insert_one(jsn)
 
 
 # searches by type
 def find_t(t):
-    pass
+    d = p.find({"pokemon.type": t})
+    for doc in d:
+        print doc
+    return d
 
 
 # searches by weaknesses
 def find_w(w):
-    pass
+    d = p.find({"pokemon.weaknesses": w})
+    for doc in d:
+        print doc
+    return d
 
 
 # searches by type and weaknesses
 def find_tw(t, w):
-    pass
+    d = p.find({"$and": [{"pokemon.type": t}, {"pokemon.weaknesses": w}]})
+    for doc in d:
+        print doc
+    return d
 
 
-# searches by spawn time
+# searches by average spawns
 def find_s(s):
-    pass
+    d = p.find({"pokemon.avg_spawns": {"$lt": s}})
+    for doc in d:
+        print doc
+    return d
 
 
 '''
@@ -119,7 +135,7 @@ if(False):
 
 # pokedex tests
 if(True):
-    find_t('water')
-    find_w('fire')
-    find_tw('grass', 'fighting')
-    find_s('11:30')
+    # find_t('Water')
+    # find_w('Fire')
+    # find_tw('Grass', 'Fighting')
+    find_s(10)
